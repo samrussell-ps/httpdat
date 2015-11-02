@@ -11,12 +11,12 @@ describe HttpRequest do
 
     subject(:http_request) { HttpRequest.from_string(serialised_request) }
 
-    xit 'parses the method' do
-      expect(http_request.method).to eq('GET')
-    end
+    #xit 'parses the method' do
+    #  expect(http_request.method).to eq('GET')
+    #end
 
-    xit 'parses the request URI' do
-      expect(http_request.request_uri).to eq('testfile')
-    end
+    #xit 'parses the request URI' do
+    #  expect(http_request.request_uri).to eq('testfile')
+    #end
   end
 end
