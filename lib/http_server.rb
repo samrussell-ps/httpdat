@@ -1,3 +1,6 @@
+require './lib/http_request'
+require './lib/http_response'
+
 class HttpServer
   def request(input_stream, output_stream, file_handler)
     input_string = ''

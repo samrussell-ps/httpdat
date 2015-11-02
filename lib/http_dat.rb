@@ -1,3 +1,7 @@
+require 'socket'
+require './lib/file_handler'
+require './lib/http_server'
+
 class HttpDat
   def initialize(port, directory)
     @port = port
@@ -12,5 +16,6 @@ class HttpDat
     socket = @server.accept
     file_handler = FileHandler.new(@directory)
     HttpServer.new.request(socket, socket, file_handler)
+    socket.close
   end
 end
