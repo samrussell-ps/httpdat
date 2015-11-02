@@ -26,6 +26,7 @@ describe HttpDat do
       expect(FileHandler).to receive(:new).with(directory).and_return(mock_file_handler)
       expect(HttpServer).to receive(:new).and_return(mock_http_server)
       expect(mock_http_server).to receive(:request).with(mock_tcp_socket, mock_tcp_socket, mock_file_handler)
+      expect(mock_tcp_socket).to receive(:close)
 
       http_dat.start_server
       http_dat.run
