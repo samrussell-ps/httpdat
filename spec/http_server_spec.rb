@@ -1,5 +1,8 @@
 require 'spec_helper'
 require './lib/http_server'
+require './lib/http_request'
+require './lib/http_response'
+require './lib/file_handler'
 
 require 'stringio'
 
