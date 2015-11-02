@@ -11,9 +11,9 @@ describe HttpServer do
 
   describe '#request' do
     let(:uri) { '/testfile.ext' }
-    let(:action) { 'GET' }
+    let(:verb) { 'GET' }
     let(:request_string) {
-      "#{action} #{uri} HTTP/1.0\r\n" +
+      "#{verb} #{uri} HTTP/1.0\r\n" +
       "Host: 127.0.0.1\r\n" +
       "\r\n"
     }
@@ -32,8 +32,21 @@ describe HttpServer do
     it 'serves an HTTP request' do
       expect(HttpRequest).to receive(:from_string).with(request_string).and_return(mock_http_request)
       allow(mock_http_request).to receive(:uri).and_return(uri)
+      allow(mock_http_request).to receive(:verb).and_return(verb)
       expect(mock_file_handler).to receive(:read_file).with(uri).and_return(fake_file)
-      expect(HttpResponse).to receive(:new).with(fake_file).and_return(mock_http_response)
+      expect(HttpResponse).to receive(:new).with(fake_file, verb).and_return(mock_http_response)
+      allow(mock_http_response).to receive(:to_string).and_return(response_string)
+      
+      http_server.request(input_stream, output_stream, mock_file_handler)
+
+      expect(output_stream.string).to eq(response_string)
+    end
+
+    it 'throws 404 when page is missing' do
+      expect(HttpRequest).to receive(:from_string).with(request_string).and_return(mock_http_request)
+      allow(mock_http_request).to receive(:uri).and_return(uri)
+      expect(mock_file_handler).to receive(:read_file).with(uri).and_raise(FileNotFoundException)
+      expect(Http404Response).to receive(:new).and_return(mock_http_response)
       allow(mock_http_response).to receive(:to_string).and_return(response_string)
       
       http_server.request(input_stream, output_stream, mock_file_handler)
