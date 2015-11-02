@@ -7,7 +7,7 @@ class FileHandler
   end
 
   def read_file(uri)
-    full_file_path = @directory+uri
+    full_file_path = @directory + uri
 
     if File.exists?(full_file_path)
       File.read(full_file_path)

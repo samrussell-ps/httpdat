@@ -14,8 +14,10 @@ class HttpDat
 
   def run
     socket = @server.accept
+
     file_handler = FileHandler.new(@directory)
     HttpServer.new.request(socket, socket, file_handler)
+
     socket.close
   end
 end

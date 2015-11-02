@@ -4,12 +4,7 @@ require './lib/http_404_response'
 
 class HttpServer
   def request(input_stream, output_stream, file_handler)
-    input_string = ''
-    current_line = ''
-    begin
-      current_line = input_stream.gets
-      input_string += current_line
-    end while current_line != "\r\n"
+    input_string = header(input_stream)
 
     http_request = HttpRequest.from_string(input_string)
     
@@ -22,5 +17,16 @@ class HttpServer
     end
 
     output_stream.write(http_response.to_string)
+  end
+
+  def header(input_stream)
+    input_string = ''
+
+    begin
+      current_line = input_stream.gets
+      input_string += current_line
+    end while current_line != "\r\n"
+
+    input_string
   end
 end
