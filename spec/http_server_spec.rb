@@ -7,10 +7,10 @@ describe HttpServer do
   let(:http_server) { HttpServer.new }
 
   describe '#request' do
-    let(:uri) { 'testfile' }
+    let(:uri) { '/testfile.ext' }
     let(:action) { 'GET' }
     let(:request_string) {
-      "#{action} /#{uri} HTTP/1.0\r\n" +
+      "#{action} #{uri} HTTP/1.0\r\n" +
       "Host: 127.0.0.1\r\n" +
       "\r\n"
     }
